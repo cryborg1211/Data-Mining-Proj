@@ -17,7 +17,7 @@ public class Main {
                 return;
             }
             
-            // SETUP TARGET (MỤC TIÊU DỰ ĐOÁN) 
+            // SETUP TARGET 
             if (data.attribute("Life Ladder") != null) {
                 data.setClass(data.attribute("Life Ladder"));
             } else {
