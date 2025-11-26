@@ -37,11 +37,20 @@ The data pipeline has been fully implemented with the following steps:
 * **Feature Selection:** Removed ID attributes (`Country name`, `Year`) to prevent overfitting.
 * **Transformation:** Applied **Min-Max Normalization [0, 1]** to scale data for better model performance.
 
-### Step 2: Classification/Prediction Algorithm (Completed)
-**File:** `src/Main.java`
 
-* **Algorithm:** Random Forest.
-* **Validation:** 10-fold Cross-validation.
-* **Current Performance:** * Correlation Coefficient: **> 0.93** (Good)
-    * RMSE: **~ 0.05** (Low error)
+## How to Run the Code
 
+Requirements: Java Development Kit (JDK) 8 or higher.
+
+Compile (Windows PowerShell)
+PowerShell
+```text
+javac -d bin -cp "lib/weka.jar" src/*.java
+```
+Run (Fixing Java 21+ "Access Denied" issues)
+Use this exact command to avoid InaccessibleObjectException:
+
+PowerShell
+```text
+java --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED -
+```
