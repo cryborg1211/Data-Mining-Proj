@@ -6,7 +6,7 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         try {
-            // PRE-PROCESSING 
+             // ---------------- STEP 1: PRE-PROCESSING ----------------
             System.out.println(">>> STEP 1: PRE-PROCESSING...");
             String csvPath = "data/World Happiness Report 2024.csv";
             String arffPath = "data/world-happiness.arff";
@@ -26,7 +26,7 @@ public class Main {
             
             System.out.println("Target Attribute: " + data.classAttribute().name());
 
-            // RUN ALGORITHM (RANDOM FOREST) 
+            // ---------------- STEP 2: RANDOM FOREST ----------------
             System.out.println("\n>>> STEP 2: APPLYING ALGORITHM (Random Forest)...");
             System.out.println("(Running 10-fold Cross-validation...)");
             
@@ -36,7 +36,32 @@ public class Main {
 
             // REPORT RESULTS 
             System.out.println(eval.toSummaryString("\n=== FINAL PREDICTION RESULTS ===\n", false));
+            System.out.println("Accuracy: " + String.format("%.2f%%", (1 - eval.errorRate()) * 100));
             
+            // ---------------- STEP 3: ADD CLUSTER FEATURE ----------------
+            System.out.println("\n>>> STEP 3: ADDING CLUSTER FEATURE...");
+            int numClusters = 5; // Example: set number of clusters
+            Instances clusteredData = ClusterFeatureGenerator.addClusterFeature(arffPath, numClusters);
+
+            // SET TARGET 
+            if (clusteredData.attribute("Life Ladder") != null) {
+                clusteredData.setClass(clusteredData.attribute("Life Ladder"));
+            } else {
+                clusteredData.setClassIndex(clusteredData.numAttributes() - 1);
+            }
+
+            System.out.println("Data with cluster feature has " + clusteredData.numAttributes() + " attributes.");
+            
+
+            // ---------------- STEP 3b: RANDOM FOREST ON CLUSTERED DATA ----------------
+            System.out.println("\n>>> STEP 3b: RANDOM FOREST WITH CLUSTER FEATURE...");
+            RandomForest modelClustered = new RandomForest();
+            Evaluation evalClustered = new Evaluation(clusteredData);
+            evalClustered.crossValidateModel(modelClustered, clusteredData, 10, new Random(1));
+
+            System.out.println(evalClustered.toSummaryString("\n=== STEP 3 RESULTS ===\n", false));
+            System.out.println("Accuracy with cluster feature: " + String.format("%.2f%%", (1 - evalClustered.errorRate()) * 100));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
