@@ -46,6 +46,8 @@ Compile (Windows PowerShell)
 PowerShell
 ```text
 javac -d bin -cp "lib/weka.jar" src/*.java
+javac -cp lib/weka.jar src/*.java -d out
+java --add-opens java.base/java.lang=ALL-UNNAMED -cp "out;lib/weka.jar" Main
 ```
 Run (Fixing Java 21+ "Access Denied" issues)
 Use this exact command to avoid InaccessibleObjectException:
