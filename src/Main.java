@@ -2,6 +2,9 @@ import weka.core.Instances;
 import weka.classifiers.trees.RandomForest;
 import weka.classifiers.Evaluation;
 import java.util.Random;
+import weka.classifiers.bayes.NaiveBayes;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Discretize;
 
 public class Main {
     public static void main(String[] args) {
@@ -61,6 +64,12 @@ public class Main {
 
             System.out.println(evalClustered.toSummaryString("\n=== STEP 3 RESULTS ===\n", false));
             System.out.println("Accuracy with cluster feature: " + String.format("%.2f%%", (1 - evalClustered.errorRate()) * 100));
+            
+            // ---------------- STEP 3c: NAIVE BAYES ----------------
+            System.out.println("\n>>> STEP 3c: NAIVE BAYES WITH CLUSTER FEATURE...");
+            NaiveBayesClassifier.runNaiveBayes(arffPath, 3); // 3 bins: Low/Medium/High
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

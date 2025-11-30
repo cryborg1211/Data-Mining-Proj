@@ -49,14 +49,4 @@ public class ClusterFeatureGenerator {
         System.out.println("K-Means clustering done! Added 'cluster_id' feature.");
         return newData;
     }
-
-    // Optional: save dataset to ARFF
-    /*
-    public static void saveDataset(Instances data, String outputFile) throws Exception {
-        weka.core.converters.ArffSaver saver = new weka.core.converters.ArffSaver();
-        saver.setInstances(data);
-        saver.setFile(new java.io.File(outputFile));
-        saver.writeBatch();
-    }
-    */
 }
