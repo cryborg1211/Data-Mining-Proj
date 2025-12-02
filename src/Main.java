@@ -37,8 +37,8 @@ public class Main {
             Evaluation eval = new Evaluation(data);
             eval.crossValidateModel(model, data, 10, new Random(1));
 
-            // REPORT RESULTS 
-            System.out.println(eval.toSummaryString("\n=== FINAL PREDICTION RESULTS ===\n", false));
+            // RESULTS 
+            System.out.println(eval.toSummaryString("\n=== RANDOM FOREST RESULTS ===\n", false));
             System.out.println("Accuracy: " + String.format("%.2f%%", (1 - eval.errorRate()) * 100));
             
             // ---------------- STEP 3: ADD CLUSTER FEATURE ----------------
