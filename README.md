@@ -37,6 +37,16 @@ The data pipeline has been fully implemented with the following steps:
 * **Feature Selection:** Removed ID attributes (`Country name`, `Year`) to prevent overfitting.
 * **Transformation:** Applied **Min-Max Normalization [0, 1]** to scale data for better model performance.
 
+### Step 3: Cluster Feature Generation (Completed)
+**File:** : ` src/ClusterFeatureGenerator.java`
+
+The clustering module has been fully implemented with the following steps:
+* **CK-Means Clustering: Applied the SimpleKMeans algorithm to group data points based on feature similarity, using a configurable number of clusters.
+* **CClass-Safe Clustering: The class attribute was excluded during K-Means training to prevent label leakage and ensure unbiased clustering.
+* **CFeature Engineering: After clustering, a new attribute named cluster_id was added to the dataset to represent the assigned cluster for each instance.
+* **CNominal Conversion: The numeric cluster labels were converted to a nominal attribute, ensuring compatibility with classification algorithms that require categorical inputs.
+* **CDataset Augmentation: The original dataset was preserved while the new cluster feature was appended, allowing downstream models to evaluate the performance impact of clustering-based enrichment.
+
 
 ## How to Run the Code
 
@@ -46,8 +56,6 @@ Compile (Windows PowerShell)
 PowerShell
 ```text
 javac -d bin -cp "lib/weka.jar" src/*.java
-javac -cp lib/weka.jar src/*.java -d out
-java --add-opens java.base/java.lang=ALL-UNNAMED -cp "out;lib/weka.jar" Main
 ```
 Run (Fixing Java 21+ "Access Denied" issues)
 Use this exact command to avoid InaccessibleObjectException:
